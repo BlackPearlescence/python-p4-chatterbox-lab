@@ -3,6 +3,7 @@
 from random import choice as rc
 
 from faker import Faker
+from datetime import datetime
 
 from app import app
 from models import db, Message
@@ -23,6 +24,7 @@ def make_messages():
         message = Message(
             body=fake.sentence(),
             username=rc(usernames),
+            created_at=datetime.now()
         )
         messages.append(message)
 

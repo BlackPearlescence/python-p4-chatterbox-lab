@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from flask import jsonify
 from app import app
 from models import db, Message
 
@@ -56,10 +56,10 @@ class TestApp:
             )
 
             h = Message.query.filter_by(body="Hello 👋").first()
+            print()
             assert(h)
-
-            db.session.delete(h)
             db.session.commit()
+            db.session.delete(h)
 
     def test_returns_data_for_newly_created_message_as_json(self):
         '''returns data for the newly created message as JSON.'''
@@ -135,7 +135,7 @@ class TestApp:
         with app.app_context():
 
             hello_from_liza = Message(
-                body="Hello 👋",
+                body="Hello 👋;",
                 username="Liza")
             
             db.session.add(hello_from_liza)
@@ -145,5 +145,5 @@ class TestApp:
                 f'/messages/{hello_from_liza.id}'
             )
 
-            h = Message.query.filter_by(body="Hello 👋").first()
+            h = Message.query.filter_by(body="Hello 👋;").first()
             assert(not h)
